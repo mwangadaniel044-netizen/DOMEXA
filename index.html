@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOMEXA | Industrial Sourcing Solutions</title>
+<meta name="description" content="Domexa industrial spare parts sourcing, engineering tools, electrical components and procurement support in Tanzania.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+:root {
+  --navy: #18364d;
+  --dark: #10283b;
+  --green: #4cf28a;
+  --green-dark: #20b866;
+  --text: #1a2d3b;
+  --muted: #637583;
+  --light: #f3f7f9;
+  --border: #dce5eb;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body { font-family: Arial, Helvetica, sans-serif; color: var(--text); line-height: 1.6; }
+a { text-decoration: none; color: inherit; }
+button, input, select, textarea { font: inherit; }
+img { max-width: 100%; display: block; }
+.container { width: 92%; max-width: 1150px; margin: auto; }
+.btn {
+  display: inline-block; padding: 11px 18px; background: var(--green);
+  color: var(--dark); border: none; border-radius: 7px;
+  font-weight: bold; cursor: pointer; text-align: center;
+  transition: .25s;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px #10283b20; }
+.btn-dark { background: var(--navy); color: white; }
+.eyebrow { color: var(--green-dark); font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
+
+/* TOP BAR */
+.topbar { background: var(--dark); color: white; padding: 8px 0; font-size: 13px; }
+.topbar a { color: var(--green); }
+
+/* NAVIGATION */
+.navbar { background: white; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
+.nav-inner { min-height: 78px; display: flex; justify-content: space-between; align-items: center; gap: 20px; position: relative; }
+.logo img { width: 175px; height: 62px; object-fit: contain; }
+.nav-links { display: flex; align-items: center; gap: 23px; }
+.nav-links a { font-size: 14px; font-weight: bold; }
+.nav-links a:hover { color: var(--green-dark); }
+.menu-button { display: none; border: 0; background: none; font-size: 27px; cursor: pointer; color: var(--navy); }
+
+/* HERO */
+.hero {
+  color: white;
+  background: linear-gradient(90deg,rgba(10,31,47,.94),rgba(16,40,59,.68),rgba(16,40,59,.25)),url("images/hero-background.jpg") center/cover no-repeat;
+}
+.hero-inner { min-height: 480px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; padding: 75px 0; }
+.hero .eyebrow { color: var(--green); }
+.hero h1 { font-size: clamp(36px,5vw,60px); line-height: 1.1; margin: 18px 0; }
+.hero h1 span { color: var(--green); }
+.hero p { max-width: 600px; color: #e0e8ed; font-size: 16px; }
+.hero-buttons { display: flex; flex-wrap: wrap; gap: 12px; margin: 25px 0; }
+.btn-outline { display: inline-block; padding: 10px 18px; color: white; border: 1px solid white; border-radius: 7px; }
+.hero-visual img { width: 100%; height: 280px; object-fit: cover; border-radius: 15px; border: 1px solid #ffffff55; box-shadow: 0 15px 40px #0004; }
+
+/* SEARCH */
+.search-section { padding: 20px 0; background: var(--light); }
+.search-box { display: flex; gap: 10px; }
+.search-box input { flex: 1; min-width: 0; padding: 13px; border: 1px solid var(--border); border-radius: 8px; background: white; }
+
+/* SECTIONS */
+.section { padding: 65px 0; }
+.section-heading { display: flex; justify-content: space-between; align-items: end; gap: 25px; margin-bottom: 28px; }
+.section-heading h2, .about h2, .quote-intro h2 { color: var(--navy); font-size: clamp(27px,3vw,38px); line-height: 1.2; margin: 10px 0; }
+.section-heading p { max-width: 500px; color: var(--muted); }
+
+/* PRODUCT CARDS */
+.category-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; }
+.category-card { background: white; border: 1px solid var(--border); border-radius: 13px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 14px #10283b08; transition: transform .25s,box-shadow .25s; }
+.category-card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px #10283b18; }
+.category-image { width: 100%; height: 190px; object-fit: cover; background: var(--light); }
+.category-content { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+.category-card h3 { color: var(--navy); font-size: 18px; margin-bottom: 8px; }
+.category-card p { color: var(--muted); font-size: 14px; margin-bottom: 12px; }
+.product-summary { color: #536978; font-size: 12px; margin-bottom: 15px; }
+.category-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; }
+.category-actions .btn { font-size: 13px; padding: 10px 12px; }
+.products-list { display: none; list-style: none; border-top: 1px solid var(--border); margin-top: 17px; padding-top: 10px; }
+.products-list.open { display: block; }
+.products-list li { display: flex; justify-content: space-between; gap: 8px; padding: 9px 0; border-bottom: 1px solid #edf1f4; font-size: 13px; }
+.product-quote { color: #16834c; font-weight: bold; white-space: nowrap; }
+.no-results { display: none; text-align: center; color: var(--muted); padding: 25px; }
+
+/* PROCESS */
+.process-section {
+  color: white;
+  background: linear-gradient(#0a1f47d9,#0a1f47e8),url("images/process-background.jpg") center/cover no-repeat;
+}
+.process-section .section-heading h2 { color: white; }
+.process-section .section-heading p { color: #d6e2e9; }
+.steps-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 16px; }
+.step-card { padding: 22px; border: 1px solid #ffffff40; background: #10283bc9; border-radius: 12px; }
+.step-number { width: 40px; height: 40px; background: var(--green); color: var(--dark); border-radius: 9px; display: grid; place-items: center; font-weight: bold; }
+.step-card h3 { margin: 14px 0 8px; font-size: 17px; }
+.step-card p { font-size: 14px; color: #d6e2e9; }
+
+/* ABOUT */
+.about-section {
+  background: linear-gradient(90deg,rgba(10,31,47,.95),rgba(16,40,59,.82)),url("images/about-background.jpg") center/cover no-repeat;
+  color: white;
+}
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 35px; }
+.about h2 { color: white; }
+.about p { color: #d6e2e9; margin: 15px 0; }
+.benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 25px 0; font-size: 14px; }
+.benefits div::before { content: "✓"; color: var(--green); font-weight: bold; margin-right: 8px; }
+.about-panel { padding: 30px; background: #10283be8; border: 1px solid #ffffff40; border-radius: 15px; }
+.about-panel p { color: #d6e2e9; margin: 12px 0; }
+.about-panel li { margin: 15px 0 15px 20px; }
+
+/* QUOTATION */
+.quote-section {
+  padding: 65px 0;
+  background: linear-gradient(90deg,rgba(243,247,249,.94),rgba(234,249,240,.91)),url("images/contact-background.jpg") center/cover no-repeat;
+}
+.quote-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 35px; align-items: start; }
+.quote-intro p { color: var(--muted); margin: 15px 0; }
+.quote-form { background: white; border: 1px solid var(--border); border-radius: 15px; padding: 25px; box-shadow: 0 12px 30px #10283b12; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.form-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.form-field.full { grid-column: 1/-1; }
+.form-field label { font-size: 13px; font-weight: bold; }
+.form-field input, .form-field select, .form-field textarea { width: 100%; padding: 11px; border: 1px solid #d5e0e6; border-radius: 7px; outline: none; }
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--green-dark); }
+.form-field textarea { min-height: 110px; resize: vertical; }
+.form-note { color: var(--muted); font-size: 12px; margin: 15px 0; }
+.form-status { display: none; background: #e4faed; color: #145c37; padding: 12px; border-radius: 8px; margin-top: 12px; font-size: 13px; overflow-wrap: anywhere; }
+
+/* CONTACT AND SOCIAL */
+.contact-icons,.social-links { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin: 18px 0; }
+.contact-icons a { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--navy); color: white; font-size: 19px; transition: .2s; }
+.contact-icons a:hover { background: var(--green); color: var(--dark); transform: translateY(-3px); }
+.social-links a { display: inline-flex; align-items: center; gap: 7px; color: #d2e0e7; font-size: 14px; transition: .2s; }
+.social-links a i { font-size: 23px; }
+.social-links a:hover { color: var(--green); transform: translateY(-2px); }
+.location-title { color: var(--navy); margin-top: 22px; }
+.location-map { width: 100%; height: 260px; border: 0; border-radius: 12px; margin-top: 12px; }
+
+/* FOOTER */
+.footer { background: #0d2232; color: #d2e0e7; padding: 35px 0 20px; }
+.footer p { margin: 14px 0; color: #afc2ce; font-size: 14px; }
+.footer h3 { margin-top: 20px; color: white; font-size: 17px; }
+.footer a:hover { color: var(--green); }
+.footer-bottom { border-top: 1px solid #ffffff25; margin-top: 25px; padding-top: 18px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 12px; }
+
+/* ANIMATIONS */
+@keyframes enterLeft { from { opacity: 0; transform: translateX(-55px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes enterRight { from { opacity: 0; transform: translateX(55px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes enterTop { from { opacity: 0; transform: translateY(-40px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes enterBottom { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+.motion-ready .reveal { opacity: 0; }
+.motion-ready .reveal.is-visible { animation: var(--reveal-animation,enterBottom) .8s cubic-bezier(.2,.7,.2,1) both; animation-delay: var(--reveal-delay,0ms); }
+.hero .hero-copy > * { animation: enterLeft .8s ease both; }
+.hero .hero-copy > *:nth-child(1) { animation-delay: .08s; }
+.hero .hero-copy > *:nth-child(2) { animation-delay: .18s; }
+.hero .hero-copy > *:nth-child(3) { animation-delay: .28s; }
+.hero .hero-copy > *:nth-child(4) { animation-delay: .38s; }
+.hero .hero-visual { animation: enterRight 1s ease .2s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .motion-ready .reveal { opacity: 1; }
+}
+
+/* RESPONSIVE */
+@media (max-width: 950px) {
+  .nav-links { gap: 12px; }
+  .nav-links a { font-size: 12px; }
+  .steps-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 800px) {
+  .menu-button { display: block; }
+  .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: white; padding: 20px 4%; flex-direction: column; align-items: flex-start; box-shadow: 0 8px 15px #10283b15; }
+  .nav-links.open { display: flex; }
+  .nav-inner > .nav-cta { display: none; }
+  .hero-inner,.about-grid,.quote-grid { grid-template-columns: 1fr; }
+  .hero-inner { padding: 50px 0; }
+  .hero-visual img { height: 230px; }
+  .category-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 520px) {
+  .logo img { width: 140px; height: 52px; }
+  .category-grid,.steps-grid,.form-grid,.benefits { grid-template-columns: 1fr; }
+  .form-field.full { grid-column: auto; }
+  .section { padding: 45px 0; }
+  .section-heading { align-items: flex-start; flex-direction: column; }
+  .hero h1 { font-size: 38px; }
+  .hero p { font-size: 15px; }
+  .hero-buttons .btn,.hero-buttons .btn-outline { font-size: 13px; }
+  .search-box { flex-wrap: wrap; }
+  .search-box input,.search-box button { width: 100%; }
+  .quote-form { padding: 17px; }
+  .category-image { height: 200px; }
+  .location-map { height: 230px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <div class="container">
+    Industrial sourcing made simpler |
+    <a href="tel:+255670757001">+255 670 757 001</a> |
+    <a href="mailto:info@domexa.co.tz">info@domexa.co.tz</a>
+  </div>
+</div>
+
+<header class="navbar">
+  <div class="container nav-inner">
+    <a class="logo" href="#home" aria-label="Domexa Home">
+      <img src="images/logo.png" alt="Domexa Logo">
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#categories">Categories</a>
+      <a href="#process">How It Works</a>
+      <a href="#about">About Us</a>
+      <a href="#quote">Contact</a>
+    </nav>
+    <a class="btn nav-cta" href="#quote">Request a Quote ↗</a>
+    <button type="button" class="menu-button" id="menuButton" aria-label="Open navigation" aria-controls="navLinks" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<main id="home">
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <div class="eyebrow">Your Industrial Sourcing Partner</div>
+      <h1>The parts you need.<br><span>The suppliers you trust.</span></h1>
+      <p>Source machinery spare parts, engineering tools, electrical components and industrial consumables through one reliable point of contact.</p>
+      <div class="hero-buttons">
+        <a class="btn" href="#quote">Request a Quotation ↗</a>
+        <a class="btn-outline" href="#categories">Explore Categories</a>
+      </div>
+      <p>✓ Hard-to-find parts &nbsp; ✓ Quote before you commit</p>
+    </div>
+    <div class="hero-visual">
+      <img src="images/hero.jpg" alt="Industrial engineering and machinery">
+    </div>
+  </div>
+</section>
+
+<section class="search-section">
+  <div class="container">
+    <form class="search-box" id="searchForm">
+      <input type="search" id="categorySearch" placeholder="Search bearings, motors, hydraulic seals..." aria-label="Search product categories and products">
+      <button type="submit" class="btn btn-dark">Search</button>
+    </form>
+  </div>
+</section>
+
+<section class="section" id="categories">
+  <div class="container">
+    <div class="section-heading">
+      <div><div class="eyebrow">What We Source</div><h2>Industrial Products, All in One Place</h2></div>
+      <p>Browse our product categories. Open a product list to explore items or request a quotation.</p>
+    </div>
+
+    <div class="category-grid" id="categoryGrid">
+
+      <article class="category-card" data-search="bearings housings belts pulleys chains couplings sprockets power transmission">
+        <img class="category-image" src="images/category-bearings.jpg" alt="Industrial bearings and mechanical components" loading="lazy">
+        <div class="category-content">
+          <h3>Bearings & Power Transmission</h3>
+          <p>Components that keep industrial equipment moving reliably.</p>
+          <div class="product-summary">Bearings · Belts · Pulleys · Chains</div>
+          <div class="category-actions">
+            <button type="button" class="btn btn-dark toggle-products" aria-expanded="false">View Products ↓</button>
+            <a class="btn" href="#quote" data-product="Bearings & Power Transmission" data-category="Bearings & Power Transmission">Get Quote</a>
+          </div>
+          <ul class="products-list">
+            <li>Ball Bearings <a class="product-quote" href="#quote" data-product="Ball Bearings" data-category="Bearings & Power Transmission">Quote</a></li>
+            <li>Roller Bearings <a class="product-quote" href="#quote" data-product="Roller Bearings" data-category="Bearings & Power Transmission">Quote</a></li>
+            <li>Bearing Housings <a class="product-quote" href="#quote" data-product="Bearing Housings" data-category="Bearings & Power Transmission">Quote</a></li>
+            <li>Drive Belts <a class="product-quote" href="#quote" data-product="Drive Belts" data-category="Bearings & Power Transmission">Quote</a></li>
+            <li>Pulleys & Sprockets <a class="product-quote" href="#quote" data-product="Pulleys & Sprockets" data-category="Bearings & Power Transmission">Quote</a></li>
+            <li>Industrial Chains <a class="product-quote" href="#quote" data-product="Industrial Chains" data-category="Bearings & Power Transmission">Quote</a></li>
+            <li>Flexible Couplings <a class="product-quote" href="#quote" data-product="Flexible Couplings" data-category="Bearings & Power Transmission">Quote</a></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="category-card" data-search="hydraulic mechanical seals o-rings hoses fittings valves pumps cylinders oil seals">
+        <img class="category-image" src="images/category-hydraulic.jpg" alt="Hydraulic and mechanical components" loading="lazy">
+        <div class="category-content">
+          <h3>Hydraulic & Mechanical Parts</h3>
+          <p>Parts and fittings for hydraulic systems, repairs and maintenance.</p>
+          <div class="product-summary">O-rings · Oil Seals · Hoses · Valves</div>
+          <div class="category-actions">
+            <button type="button" class="btn btn-dark toggle-products" aria-expanded="false">View Products ↓</button>
+            <a class="btn" href="#quote" data-product="Hydraulic & Mechanical Parts" data-category="Hydraulic & Mechanical Parts">Get Quote</a>
+          </div>
+          <ul class="products-list">
+            <li>O-Rings <a class="product-quote" href="#quote" data-product="O-Rings" data-category="Hydraulic & Mechanical Parts">Quote</a></li>
+            <li>Oil Seals <a class="product-quote" href="#quote" data-product="Oil Seals" data-category="Hydraulic & Mechanical Parts">Quote</a></li>
+            <li>Hydraulic Seal Kits <a class="product-quote" href="#quote" data-product="Hydraulic Seal Kits" data-category="Hydraulic & Mechanical Parts">Quote</a></li>
+            <li>Hydraulic Hoses <a class="product-quote" href="#quote" data-product="Hydraulic Hoses" data-category="Hydraulic & Mechanical Parts">Quote</a></li>
+            <li>Hydraulic Pumps <a class="product-quote" href="#quote" data-product="Hydraulic Pumps" data-category="Hydraulic & Mechanical Parts">Quote</a></li>
+            <li>Hydraulic Valves <a class="product-quote" href="#quote" data-product="Hydraulic Valves" data-category="Hydraulic & Mechanical Parts">Quote</a></li>
+            <li>Pipe Fittings <a class="product-quote" href="#quote" data-product="Pipe Fittings" data-category="Hydraulic & Mechanical Parts">Quote</a></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="category-card" data-search="heavy machinery excavator bulldozer loader undercarriage bucket teeth filters engines mining construction">
+        <img class="category-image" src="images/category-machinery.jpg" alt="Heavy construction machinery and spare parts" loading="lazy">
+        <div class="category-content">
+          <h3>Heavy Machinery Spare Parts</h3>
+          <p>Parts for construction, mining and earthmoving machinery.</p>
+          <div class="product-summary">Filters · Bucket Teeth · Engine Parts</div>
+          <div class="category-actions">
+            <button type="button" class="btn btn-dark toggle-products" aria-expanded="false">View Products ↓</button>
+            <a class="btn" href="#quote" data-product="Heavy Machinery Spare Parts" data-category="Heavy Machinery Spare Parts">Get Quote</a>
+          </div>
+          <ul class="products-list">
+            <li>Engine Filters <a class="product-quote" href="#quote" data-product="Engine Filters" data-category="Heavy Machinery Spare Parts">Quote</a></li>
+            <li>Fuel Filters <a class="product-quote" href="#quote" data-product="Fuel Filters" data-category="Heavy Machinery Spare Parts">Quote</a></li>
+            <li>Bucket Teeth <a class="product-quote" href="#quote" data-product="Bucket Teeth" data-category="Heavy Machinery Spare Parts">Quote</a></li>
+            <li>Undercarriage Parts <a class="product-quote" href="#quote" data-product="Undercarriage Parts" data-category="Heavy Machinery Spare Parts">Quote</a></li>
+            <li>Engine Components <a class="product-quote" href="#quote" data-product="Engine Components" data-category="Heavy Machinery Spare Parts">Quote</a></li>
+            <li>Starter Motors <a class="product-quote" href="#quote" data-product="Starter Motors" data-category="Heavy Machinery Spare Parts">Quote</a></li>
+            <li>Alternators <a class="product-quote" href="#quote" data-product="Alternators" data-category="Heavy Machinery Spare Parts">Quote</a></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="category-card" data-search="electrical cables contactors relays switches motors sensors alternators electrical components">
+        <img class="category-image" src="images/category-electrical.jpg" alt="Electrical and electromechanical components" loading="lazy">
+        <div class="category-content">
+          <h3>Electrical & Electromechanical</h3>
+          <p>Components for industrial installations and electrical equipment.</p>
+          <div class="product-summary">Motors · Relays · Switches · Cables</div>
+          <div class="category-actions">
+            <button type="button" class="btn btn-dark toggle-products" aria-expanded="false">View Products ↓</button>
+            <a class="btn" href="#quote" data-product="Electrical & Electromechanical" data-category="Electrical & Electromechanical">Get Quote</a>
+          </div>
+          <ul class="products-list">
+            <li>Electric Motors <a class="product-quote" href="#quote" data-product="Electric Motors" data-category="Electrical & Electromechanical">Quote</a></li>
+            <li>Electrical Cables <a class="product-quote" href="#quote" data-product="Electrical Cables" data-category="Electrical & Electromechanical">Quote</a></li>
+            <li>Relays & Contactors <a class="product-quote" href="#quote" data-product="Relays & Contactors" data-category="Electrical & Electromechanical">Quote</a></li>
+            <li>Industrial Switches <a class="product-quote" href="#quote" data-product="Industrial Switches" data-category="Electrical & Electromechanical">Quote</a></li>
+            <li>Industrial Sensors <a class="product-quote" href="#quote" data-product="Industrial Sensors" data-category="Electrical & Electromechanical">Quote</a></li>
+            <li>Alternators <a class="product-quote" href="#quote" data-product="Alternators" data-category="Electrical & Electromechanical">Quote</a></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="category-card" data-search="industrial tools spanners pliers screwdrivers cutting discs bolts nuts welding fasteners">
+        <img class="category-image" src="images/category-tools.jpg" alt="Industrial tools and workshop equipment" loading="lazy">
+        <div class="category-content">
+          <h3>Industrial Tools & Consumables</h3>
+          <p>Workshop essentials, maintenance tools and everyday consumables.</p>
+          <div class="product-summary">Hand Tools · Fasteners · Welding Supplies</div>
+          <div class="category-actions">
+            <button type="button" class="btn btn-dark toggle-products" aria-expanded="false">View Products ↓</button>
+            <a class="btn" href="#quote" data-product="Industrial Tools & Consumables" data-category="Industrial Tools & Consumables">Get Quote</a>
+          </div>
+          <ul class="products-list">
+            <li>Spanners & Wrenches <a class="product-quote" href="#quote" data-product="Spanners & Wrenches" data-category="Industrial Tools & Consumables">Quote</a></li>
+            <li>Screwdrivers & Pliers <a class="product-quote" href="#quote" data-product="Screwdrivers & Pliers" data-category="Industrial Tools & Consumables">Quote</a></li>
+            <li>Bolts & Nuts <a class="product-quote" href="#quote" data-product="Bolts & Nuts" data-category="Industrial Tools & Consumables">Quote</a></li>
+            <li>Cutting Discs <a class="product-quote" href="#quote" data-product="Cutting Discs" data-category="Industrial Tools & Consumables">Quote</a></li>
+            <li>Welding Machines <a class="product-quote" href="#quote" data-product="Welding Machines" data-category="Industrial Tools & Consumables">Quote</a></li>
+            <li>Drill Bits <a class="product-quote" href="#quote" data-product="Drill Bits" data-category="Industrial Tools & Consumables">Quote</a></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="category-card" data-search="power generation generators compressors safety ppe lubricants protective equipment helmets boots">
+        <img class="category-image" src="images/category-power-safety.jpg" alt="Power generation and industrial safety equipment" loading="lazy">
+        <div class="category-content">
+          <h3>Power Generation & Safety</h3>
+          <p>Equipment and supplies for safe, dependable industrial operations.</p>
+          <div class="product-summary">Generators · Compressors · PPE · Lubricants</div>
+          <div class="category-actions">
+            <button type="button" class="btn btn-dark toggle-products" aria-expanded="false">View Products ↓</button>
+            <a class="btn" href="#quote" data-product="Power Generation & Safety" data-category="Power Generation & Safety">Get Quote</a>
+          </div>
+          <ul class="products-list">
+            <li>Generators <a class="product-quote" href="#quote" data-product="Generators" data-category="Power Generation & Safety">Quote</a></li>
+            <li>Air Compressors <a class="product-quote" href="#quote" data-product="Air Compressors" data-category="Power Generation & Safety">Quote</a></li>
+            <li>Safety Helmets <a class="product-quote" href="#quote" data-product="Safety Helmets" data-category="Power Generation & Safety">Quote</a></li>
+            <li>Safety Boots <a class="product-quote" href="#quote" data-product="Safety Boots" data-category="Power Generation & Safety">Quote</a></li>
+            <li>Protective Gloves <a class="product-quote" href="#quote" data-product="Protective Gloves" data-category="Power Generation & Safety">Quote</a></li>
+            <li>Industrial Lubricants <a class="product-quote" href="#quote" data-product="Industrial Lubricants" data-category="Power Generation & Safety">Quote</a></li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+    <p class="no-results" id="noResults">No matching products found. Try another search or contact us for help.</p>
+  </div>
+</section>
+
+<section class="section process-section" id="process">
+  <div class="container">
+    <div class="section-heading">
+      <div><div class="eyebrow">Simple Procurement</div><h2>From Request to Delivery</h2></div>
+      <p>Review the quotation before confirming your order. Procurement begins after your confirmation.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card"><div class="step-number">01</div><h3>Tell Us What You Need</h3><p>Share the part number, brand, equipment model, specifications and quantity.</p></div>
+      <div class="step-card"><div class="step-number">02</div><h3>We Source and Quote</h3><p>We contact suitable suppliers and prepare pricing and lead-time details.</p></div>
+      <div class="step-card"><div class="step-number">03</div><h3>Approve the Quotation</h3><p>Review the offer and confirm the order before procurement begins.</p></div>
+      <div class="step-card"><div class="step-number">04</div><h3>Procurement and Delivery</h3><p>We coordinate purchasing and agreed delivery or collection arrangements.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section about-section" id="about">
+  <div class="container about-grid">
+    <div class="about">
+      <div class="eyebrow">Built for Industrial Buyers</div>
+      <h2>Less Time Searching. More Time Operating.</h2>
+      <p>Domexa helps industrial teams simplify sourcing by connecting product requests with suitable suppliers.</p>
+      <div class="benefits">
+        <div>Hard-to-source items</div><div>Multiple product categories</div>
+        <div>Quote-led purchasing</div><div>B2B procurement support</div>
+        <div>Specifications-led matching</div><div>Order-first sourcing</div>
+      </div>
+      <a class="btn" href="#quote">Tell Us What You Need →</a>
+    </div>
+    <div class="about-panel">
+      <h3>One Sourcing Partner for Many Needs</h3>
+      <p>Supporting maintenance teams, workshops, contractors and procurement departments.</p>
+      <ul>
+        <li><strong>Mining & Construction</strong><br>Machinery parts, hydraulics and wear components.</li>
+        <li><strong>Factories & Utilities</strong><br>Bearings, motors and electrical parts.</li>
+        <li><strong>Workshops & Contractors</strong><br>Tools, consumables and replacement parts.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="quote-section" id="quote">
+  <div class="container quote-grid">
+    <div class="quote-intro">
+      <div class="eyebrow">Request for Quotation</div>
+      <h2>Looking for a Specific Part?</h2>
+      <p>Send us the details you have. A part number or equipment model helps, but you can also describe the product you need.</p>
+      <p><strong>Order-first sourcing:</strong> Submitting a request does not commit you to purchase. Procurement begins after the quotation is reviewed and the order is confirmed.</p>
+
+      <div class="contact-icons">
+        <a href="tel:+255670757001" aria-label="Call Domexa" title="Phone"><i class="fa-solid fa-phone"></i></a>
+        <a href="mailto:info@domexa.co.tz" aria-label="Email Domexa" title="Email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="https://wa.me/255670757001" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Domexa" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://www.google.com/maps/search/?api=1&query=Goba+Dar+es+Salaam+Tanzania" target="_blank" rel="noopener noreferrer" aria-label="Domexa location" title="Location"><i class="fa-solid fa-location-dot"></i></a>
+      </div>
+
+      <p><strong>Phone / WhatsApp:</strong><br><a href="tel:+255670757001">+255 670 757 001</a></p>
+      <p><strong>Email:</strong><br><a href="mailto:info@domexa.co.tz">info@domexa.co.tz</a></p>
+      <h3 class="location-title">Our Location</h3>
+      <p>Goba, Dar es Salaam, Tanzania</p>
+      <iframe class="location-map" src="https://maps.google.com/maps?q=Goba%2C%20Dar%20es%20Salaam%2C%20Tanzania&z=12&output=embed" title="Map showing Goba, Dar es Salaam, Tanzania" loading="lazy"></iframe>
+    </div>
+
+    <form class="quote-form" id="quoteForm">
+      <div class="form-grid">
+        <div class="form-field"><label for="customerName">Your Name *</label><input id="customerName" name="customerName" required placeholder="Enter your name"></div>
+        <div class="form-field"><label for="company">Company Name</label><input id="company" name="company" placeholder="Your company"></div>
+        <div class="form-field"><label for="customerEmail">Email Address *</label><input id="customerEmail" name="customerEmail" type="email" required placeholder="you@example.com"></div>
+        <div class="form-field"><label for="phone">Phone Number *</label><input id="phone" name="phone" type="tel" required placeholder="+255..."></div>
+        <div class="form-field"><label for="category">Product Category *</label>
+          <select id="category" name="category" required>
+            <option value="">Select a category</option>
+            <option>Bearings & Power Transmission</option>
+            <option>Hydraulic & Mechanical Parts</option>
+            <option>Heavy Machinery Spare Parts</option>
+            <option>Electrical & Electromechanical</option>
+            <option>Industrial Tools & Consumables</option>
+            <option>Power Generation & Safety</option>
+            <option>Other / Not Sure</option>
+          </select>
+        </div>
+        <div class="form-field"><label for="product">Product / Part Name *</label><input id="product" name="product" required placeholder="Name or part number"></div>
+        <div class="form-field"><label for="quantity">Quantity</label><input id="quantity" name="quantity" type="number" min="1" step="1" placeholder="e.g. 10"></div>
+        <div class="form-field"><label for="equipmentModel">Equipment Model</label><input id="equipmentModel" name="equipmentModel" placeholder="Brand / machine model"></div>
+        <div class="form-field full"><label for="details">Specifications / Additional Details *</label><textarea id="details" name="details" required placeholder="Describe the part, specifications, brand, size, delivery location or any other details..."></textarea></div>
+      </div>
+      <p class="form-note">This form prepares an email request using your email application. Submitting a request is not a purchase commitment.</p>
+      <button type="submit" class="btn btn-dark">Prepare Quotation Request ↗</button>
+      <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <a class="logo" href="#home" aria-label="Domexa Home"><img src="images/logo1.png" alt="Domexa logo"></a>
+    <p>Industrial spare-parts sourcing, engineering tools, electrical components and equipment.</p>
+    <h3>Connect With Domexa</h3>
+    <div class="social-links">
+      <!-- Update these URLs if you have different official profile addresses. -->
+      <a href="https://www.instagram.com/domexa_solutions/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i><span>Instagram</span></a>
+      <a href="https://www.facebook.com/share/19gmCGsC6a/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook"></i><span>Facebook</span></a>
+      <a href="https://www.tiktok.com/@domexa_solutions" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-tiktok"></i><span>TikTok</span></a>
+      <a href="https://www.linkedin.com/company/domexa-solutions-limited/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i><span>LinkedIn</span></a>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> Domexa. All rights reserved.</span>
+      <span>Goba, Dar es Salaam, Tanzania</span>
+      <a href="#home">Back to top ↑</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* MOBILE NAVIGATION */
+const menuButton = document.getElementById("menuButton");
+const navLinks = document.getElementById("navLinks");
+
+menuButton.addEventListener("click", function () {
+  const isOpen = navLinks.classList.toggle("open");
+  menuButton.setAttribute("aria-expanded", String(isOpen));
+  menuButton.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
+  menuButton.textContent = isOpen ? "✕" : "☰";
+});
+
+navLinks.querySelectorAll("a").forEach(function (link) {
+  link.addEventListener("click", function () {
+    navLinks.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
+    menuButton.setAttribute("aria-label", "Open navigation");
+    menuButton.textContent = "☰";
+  });
+});
+
+/* SHOW / HIDE PRODUCT LISTS */
+document.querySelectorAll(".toggle-products").forEach(function (button) {
+  button.addEventListener("click", function () {
+    const list = button.closest(".category-card").querySelector(".products-list");
+    const isOpen = list.classList.toggle("open");
+    button.setAttribute("aria-expanded", String(isOpen));
+    button.textContent = isOpen ? "Hide Products ↑" : "View Products ↓";
+  });
+});
+
+/* SEARCH CATEGORIES AND PRODUCTS */
+function searchCategories() {
+  const query = document.getElementById("categorySearch").value.trim().toLowerCase();
+  const cards = document.querySelectorAll(".category-card");
+  let visibleCount = 0;
+
+  cards.forEach(function (card) {
+    const list = card.querySelector(".products-list");
+    const button = card.querySelector(".toggle-products");
+    const text = (card.innerText + " " + (card.dataset.search || "")).toLowerCase();
+    const matches = !query || text.includes(query);
+
+    card.style.display = matches ? "flex" : "none";
+
+    if (matches) {
+      visibleCount++;
+      if (query && list.innerText.toLowerCase().includes(query)) {
+        list.classList.add("open");
+        button.textContent = "Hide Products ↑";
+        button.setAttribute("aria-expanded", "true");
+      } else if (!query) {
+        list.classList.remove("open");
+        button.textContent = "View Products ↓";
+        button.setAttribute("aria-expanded", "false");
+      }
+    }
+  });
+
+  document.getElementById("noResults").style.display = visibleCount ? "none" : "block";
+}
+
+document.getElementById("searchForm").addEventListener("submit", function (event) {
+  event.preventDefault();
+  searchCategories();
+});
+document.getElementById("categorySearch").addEventListener("input", searchCategories);
+
+/* FILL QUOTATION FORM FROM PRODUCT LINKS */
+document.querySelectorAll("[data-product]").forEach(function (link) {
+  link.addEventListener("click", function () {
+    document.getElementById("product").value = link.dataset.product || "";
+    if (link.dataset.category) {
+      document.getElementById("category").value = link.dataset.category;
+    }
+  });
+});
+
+/* PREPARE QUOTATION EMAIL */
+document.getElementById("quoteForm").addEventListener("submit", function (event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  if (!form.reportValidity()) return;
+
+  const data = new FormData(form);
+  const get = function (key) { return (data.get(key) || "").toString().trim(); };
+
+  const subject = encodeURIComponent("Domexa Quotation Request: " + get("product"));
+  const body = encodeURIComponent(
+    "DOMEXA QUOTATION REQUEST\n\n" +
+    "Name: " + get("customerName") + "\n" +
+    "Company: " + (get("company") || "Not provided") + "\n" +
+    "Email: " + get("customerEmail") + "\n" +
+    "Phone: " + get("phone") + "\n" +
+    "Category: " + get("category") + "\n" +
+    "Product: " + get("product") + "\n" +
+    "Quantity: " + (get("quantity") || "Not specified") + "\n" +
+    "Equipment Model: " + (get("equipmentModel") || "Not specified") + "\n" +
+    "Specifications: " + get("details") + "\n\n" +
+    "This is a quotation request, not a purchase commitment."
+  );
+
+  const status = document.getElementById("formStatus");
+  status.style.display = "block";
+  status.textContent = "Your email application should open. Review the message and press Send. If it does not open, email info@domexa.co.tz directly.";
+
+  window.location.href = "mailto:info@domexa.co.tz?subject=" + subject + "&body=" + body;
+});
+
+/* SCROLL-REVEAL MOTION */
+(function () {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const elements = document.querySelectorAll(
+    ".search-box,.section-heading,.category-card,.step-card,.about > *, .about-panel,.quote-intro > *, .quote-form,.footer .container > *"
+  );
+
+  if (reduceMotion || !("IntersectionObserver" in window)) return;
+
+  document.body.classList.add("motion-ready");
+  const directions = ["enterLeft","enterRight","enterBottom","enterTop"];
+
+  elements.forEach(function (element, index) {
+    element.classList.add("reveal");
+    element.style.setProperty("--reveal-animation", directions[index % directions.length]);
+    element.style.setProperty("--reveal-delay", (index % 4) * 80 + "ms");
+  });
+
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -30px 0px" });
+
+  elements.forEach(function (element) { observer.observe(element); });
+})();
+
+/* COPYRIGHT YEAR */
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
